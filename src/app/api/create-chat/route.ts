@@ -1,9 +1,17 @@
 // api/create-chat
 
+import { db } from "@/lib/db";
 import { loadS3IntoPinecone } from "@/lib/db/pinecone";
+import { getS3Url } from "@/lib/db/s3";
+import { chats } from "@/lib/db/schema";
+import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request, res: Response) {
+  const { userId } = await auth();
+  if (!userId) {
+    return NextResponse.json({ error: "authorized" }, { status: 401 });
+  }
   try {
     const body = await req.json();
     const { file_key, file_name } = body;
