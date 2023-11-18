@@ -9,10 +9,10 @@ import {
   Document,
   RecursiveCharacterTextSplitter,
 } from "@pinecone-database/doc-splitter";
-import { getEmbeddings } from "../embeddings";
+import { getEmbeddings } from "./embeddings";
 import md5 from "md5";
 import { Vector } from "@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch";
-import { convertToAscii } from "../utils";
+import { convertToAscii } from "./utils";
 
 let pinecone: PineconeClient | null = null;
 
