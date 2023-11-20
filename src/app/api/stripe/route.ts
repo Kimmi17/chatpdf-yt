@@ -27,5 +27,38 @@ export async function GET() {
       });
       return NextResponse.json({ url: stripeSession.url });
     }
-  } catch (error) {}
+
+    // user's first time trying to subscribe
+    const stripeSession = await stripe.checkout.sessions.create({
+      success_url: return_url,
+      cancel_url: return_url,
+      payment_method_types: ["card"],
+      mode: "subscription",
+      billing_address_collection: "auto",
+      customer_email: user?.emailAddresses[0].emailAddress,
+      line_items: [
+        {
+          price_data: {
+            currency: "USD",
+            product_data: {
+              name: "ChatPDF Pro",
+              description: "Unlimited PDF sessions!",
+            },
+            unit_amount: 2000,
+            recurring: {
+              interval: "month",
+            },
+          },
+          quantity: 1,
+        },
+      ],
+      metadata: {
+        userId,
+      },
+    });
+    return NextResponse.json({ url: stripeSession.url });
+  } catch (error) {
+    console.log("stripe error", error);
+    return new NextResponse("internal server error", { status: 500 });
+  }
 }
