@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 import React from "react";
+import ChatSideBar from "@/components/ChatSideBar";
 
 type Props = {
   params: {
@@ -23,6 +24,17 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
   if (!_chats.find((chat) => chat.id === parseInt(chatId))) {
     return redirect("/");
   }
+
+  return (
+    <div className="flex max-h-screen overflow-scroll">
+      <div className="flex w-full max-h-screen overflow-scroll">
+        {/* chat sidebar */}
+        <div className="flex-[1] max-w-xs">
+          <ChatSideBar chats={_chats} chatId={parseInt(chatId)} />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ChatPage;
