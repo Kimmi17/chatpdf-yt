@@ -18,7 +18,18 @@ const MessageList = ({ messages }: Props) => {
               "justify-end pl-10": message.role === "user",
               "justify-start pr-10": message.role === "assistant",
             })}
-          ></div>
+          >
+            <div
+              className={cn(
+                "rounded-lg px-3 text-sm py-1 shadow-md ring-1 ring-gray-900/10",
+                {
+                  "bg-blue-600 text-white": message.role === "user",
+                }
+              )}
+            >
+              <p>{message.content}</p>
+            </div>
+          </div>
         );
       })}
     </div>
