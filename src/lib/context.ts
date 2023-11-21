@@ -11,7 +11,7 @@ export async function getMatchesFromEmbeddings(
     apiKey: process.env.PINECONE_API_KEY!,
     environment: process.env.PINECONE_ENVIRONMENT!,
   });
-  const index = await pinecone.Index("chatpdf");
+  const index = await pinecone.Index("chatpdf-yt");
 
   try {
     const namespace = convertToAscii(fileKey);
